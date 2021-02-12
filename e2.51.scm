@@ -1,0 +1,23 @@
+(load "./frame.scm")
+(load "./e2.49.scm")
+
+(define (below1 a b)
+    (let ((ap (transform_painter a (make_vect 0.0 0.0)
+                         (make_vect 1.0 0.0)
+                         (make_vect 0.0 0.5)))
+          (bp (transform_painter b (make_vect 0.0 0.5)
+                               (make_vect 1.0 0.5)
+                               (make_vect 0.0 1.0)))
+        )
+            (lambda (frame)
+                (ap frame)
+                (bp frame)
+            )
+        )
+)
+
+(define (below2 a b)
+    (rotate90 (beside (rotate270 a) (rotate270 b)))
+)
+
+; ((below2 wave outline) (make_frame (make_vect 0 0) (make_vect 1 0) (make_vect 0 1)))

@@ -1,0 +1,21 @@
+(define (sp a numbers)
+    (if (null? numbers)
+        '()
+        (let ((l (car numbers)))
+            (if (or (and (even? a) (even? l)) (and (odd? a) (odd? l)))
+                (cons l (sp a (cdr numbers)))
+                (sp a (cdr numbers))
+            )
+        )
+    )
+)
+
+(define (same_parity a . numbers)
+    (cons a (sp a numbers))
+)
+
+
+(display (same_parity 1 2 3 4 5 6 7 8))
+(newline)
+(display (same_parity 0 2 3 4 5 6 7 8))
+(newline)
