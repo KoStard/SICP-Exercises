@@ -1,0 +1,1 @@
+Racket.exe -I sicp -f %1

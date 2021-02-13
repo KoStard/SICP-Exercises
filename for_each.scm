@@ -1,6 +1,6 @@
 (define (for_each f items)
     (if (null? items)
-        ()
+        '()
         (begin
             (f (car items))
             (for_each f (cdr items)))

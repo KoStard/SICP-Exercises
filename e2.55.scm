@@ -1,0 +1,2 @@
+(display (car ''abracadabra))  ; -> quote
+;;; This is happening, because the second quote is being compiled to (quote abracadabra), which itself is under quote, so this is becoming a list, which is handled by the car

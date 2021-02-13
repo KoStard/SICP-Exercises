@@ -1,0 +1,1 @@
+.\run.bat %1 | python .\visualize_points.py

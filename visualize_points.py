@@ -5,6 +5,8 @@ import numpy as np
 lines = []
 for line in sys.stdin:
     l = line.strip()
+    if " : " not in l:
+        continue
     f, t = l.split(" : ")
     fx, fy = f[1:-1].split(" ")
     tx, ty = t[1:-1].split(" ")
