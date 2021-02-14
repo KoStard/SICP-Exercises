@@ -50,5 +50,5 @@
     )
 )
 
-(display (deriv '(* (* x y) (+ x 3)) 'x))  (newline)
+(display (deriv '(* (* x y) (+ x 3)) 'x))  (newline)   ; This will be equivalent to the next line
 (display (deriv '(* x y (+ x 3)) 'x))  (newline)
