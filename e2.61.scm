@@ -10,7 +10,8 @@
 )
 
 (define (intersection_set set1 set2)
-    (if ((or (null? set1) (null? set2)) '())
+    (if (or (null? set1) (null? set2))
+        '()
         (let ((x (car set1)) (y (car set2)))
             (cond 
                 ((= x y) (cons x (intersection_set (cdr set1) (cdr set2))))
