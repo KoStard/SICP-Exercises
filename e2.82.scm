@@ -83,9 +83,9 @@
     )
 )
 
-(put 'print '(a a) (lambda (b c) (display b) (display " ") (display c) (newline)))
-(put-coercion 'b 'a (lambda (a) (attach-tag 'a (* (contents a) 2))))
+;;; (put 'print '(a a) (lambda (b c) (display b) (display " ") (display c) (newline)))
+;;; (put-coercion 'b 'a (lambda (a) (attach-tag 'a (* (contents a) 2))))
 
-(apply-generic 'print (attach-tag 'a 20) (attach-tag 'b 4))
+;;; (apply-generic 'print (attach-tag 'a 20) (attach-tag 'b 4))
 ;;; (display (get-coercion 'a 'b))
 
