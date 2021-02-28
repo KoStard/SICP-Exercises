@@ -53,4 +53,4 @@
 ;;; So from here it obvious that in cases when the adjoin_set and the union_set are used much more often than teh element_of_set? and the intersection_set this will be more useful than the one with deduplication.
 
 
-(display (union_set '(1 2 3 4) '(3 4 5 6)))
+;;; (display (union_set '(1 2 3 4) '(3 4 5 6)))

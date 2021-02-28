@@ -30,5 +30,14 @@
     )
 )
 
+(define (set_size set) (length set))
+
+(define (list->set lst) 
+    (if (null? lst) 
+        lst
+        (adjoin_set (car lst) (list->set (cdr lst)))
+    )
+)
+
 
 ;;; (display (intersection_set '(1 2 3 4) '(3 4 5 6)))
