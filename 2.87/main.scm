@@ -31,7 +31,18 @@
 
 (let (
     (tl1 (adjoin-term (make-term (make-scheme-number 1) (make-scheme-number 3)) (the-empty-termlist)))
-    (tl2 (adjoin-term (make-term (make-scheme-number 1) (make-scheme-number 1)) (the-empty-termlist)))
+    (tl2 (adjoin-term (make-term (make-scheme-number 1) (make-scheme-number 2)) (the-empty-termlist)))
 )
-    (display (add (make_polynomial 'x tl1) (make_polynomial 'x tl2)))
+    ;;; (display (=zero? (add (make_polynomial 'x tl1) (make_polynomial 'x tl2)))) (newline)
+    (let (
+        (tl3 (adjoin-term (make-term (make-scheme-number 1) (make_polynomial 'y tl1)) (the-empty-termlist)))
+        (tl4 (adjoin-term (make-term (make-scheme-number 1) (make_polynomial 'y tl2)) (the-empty-termlist)))
+    )
+        (let (
+            (p1 (make_polynomial 'x tl3))
+            (p2 (make_polynomial 'x tl4))
+        )
+            (display (add p1 p2))
+        )
+    )
 )

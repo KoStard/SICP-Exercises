@@ -55,6 +55,25 @@
                             (mul (coeff t1) (coeff t2)))
                 (mul-term-by-all-terms t1 (rest-terms L))))))
 
+
+    (define (term_zero? term)
+        (zero? (coeff term))
+    )
+
+
+    (define (terms_zero? terms)
+        (if (null? terms) 
+            true 
+            (and (term_zero? (first-term terms))
+                (terms_zero? (rest-terms terms))
+            )
+        )
+    )
+
+    (define (polynomial_zero? pol)
+        (terms_zero? (term-list pol))
+    )
+
     (define (tag p) (attach-tag 'polynomial p))
     (put 'add '(polynomial polynomial) 
         (lambda (p1 p2) (tag (add-poly p1 p2))))
@@ -62,6 +81,7 @@
         (lambda (p1 p2) (tag (mul-poly p1 p2))))
     (put 'make 'polynomial
         (lambda (var terms) (tag (make-poly var terms))))
+    (put '=zero? '(polynomial) polynomial_zero?)
     'done)
 
 
