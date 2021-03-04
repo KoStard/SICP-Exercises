@@ -12,16 +12,29 @@
     )
 )
 
-(define (attach-tag type-tag contents)
-  (cons type-tag contents))
+
+(define (attach-tag type_tag contents)
+    (cond 
+        ((number? contents) contents)
+        (else (cons type_tag contents))
+    )
+)
+
 (define (type-tag datum)
-  (if (pair? datum)
-      (car datum)
-      (error "Bad tagged datum -- TYPE-TAG" datum)))
+    (cond 
+        ((number? datum) 'scheme-number)
+        ((pair? datum) (car datum))
+        (else (error "Bad tagged datum -- TYPE_TAG" datum))
+    )
+)
+
 (define (contents datum)
-  (if (pair? datum)
-      (cdr datum)
-      (error "Bad tagged datum -- CONTENTS" datum)))
+    (cond 
+        ((number? datum) datum)
+        ((pair? datum) (cdr datum))
+        (else (error "Bad tagged datum -- CONTENTS" datum))
+    )
+)
 
 (define (get generic_name implementation_key)
     (define (get_internal table)

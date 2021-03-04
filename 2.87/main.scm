@@ -30,8 +30,8 @@
 
 
 (let (
-    (tl1 (adjoin-term (make-term (make-rational 1 2) (make-scheme-number 3)) (the-empty-termlist)))
-    (tl2 (adjoin-term (make-term (make-scheme-number 2) (make-scheme-number 1)) (the-empty-termlist)))
+    (tl1 (adjoin-term (make-term (make-scheme-number 1) (make-scheme-number 3)) (the-empty-termlist)))
+    (tl2 (adjoin-term (make-term (make-scheme-number 1) (make-scheme-number 1)) (the-empty-termlist)))
 )
     (display (add (make_polynomial 'x tl1) (make_polynomial 'x tl2)))
 )
