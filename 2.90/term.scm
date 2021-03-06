@@ -1,0 +1,21 @@
+(define (install-term-package)
+    (define (tag p) (attach-tag 'term p))
+    (define (make-term order coeff) (list order coeff))
+    (define (order term) (car term))
+    (define (coeff term) (cadr term))
+    (define (negate term)
+        (make-term (order term) (- (coeff term))))
+    
+    (put 'make 'term (lambda (order coeff) (tag (make-term order coeff))))
+    (put 'order '(term) order)
+    (put 'coeff '(term) coeff)
+    (put 'negate '(term) (lambda (term) (tag (negate term))))
+    (put '=zero? '(term) (lambda (term) (=zero? (coeff term))))
+    'done)
+
+(define (make-term order coeff)
+    ((get 'make 'term) order coeff)
+)
+
+(define (coeff term) (apply-generic 'coeff term))
+(define (order term) (apply-generic 'order term))
