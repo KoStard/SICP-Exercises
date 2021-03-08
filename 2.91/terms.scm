@@ -71,7 +71,7 @@
         )
     )
 
-    (put '=zero? '(term) terms_zero?)
+    (put '=zero? '(term-list) terms_zero?)
     (put 'negate '(term-list) (lambda (term-list) (tag (negate term-list))))
     (put 'add '(term-list term-list) (lambda (L1 L2) (tag (add-terms L1 L2))))
     (put 'mul '(term-list term-list) (lambda (L1 L2) (tag (mul-terms L1 L2))))
@@ -79,6 +79,10 @@
     (put 'the-empty-sparse-termlist '() (lambda () (tag ((get 'the-empty-termlist 'sparse)))))
     (put 'the-empty-dense-termlist '() (lambda () (tag ((get 'the-empty-termlist 'dense)))))
     (put 'adjoin-term 'term-list (lambda (term term-list) (tag (adjoin-term term term-list))))
+    (put 'empty-termlist? '(term-list) empty-termlist?)
+    (put 'first-term '(term-list) (lambda (L) (first-term L)))
+    (put 'rest-terms '(term-list) (lambda (L) (tag (rest-terms L))))
+    (put 'the-empty-termlist-with-type-of '(term-list) (lambda (L) (tag (the-empty-termlist-with-type-of L))))
 
     'done)
 
@@ -94,6 +98,6 @@
 (define (the-empty-sparse-termlist) ((get 'the-empty-sparse-termlist '())))
 (define (the-empty-dense-termlist) ((get 'the-empty-dense-termlist '())))
 (define (empty-termlist? term-list) (apply-generic 'empty-termlist? term-list))
+(define (the-empty-termlist-with-type-of term-list) (apply-generic 'the-empty-termlist-with-type-of term-list))
 (define (negate_obj obj) (apply-generic 'negate obj))
-
 ;;; There is no coersion between these types, but we can add that too
