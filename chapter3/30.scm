@@ -1,0 +1,56 @@
+(load "./chapter3/28.scm")
+
+(define (half-adder a b s c)
+    (let (
+        (d (make-wire))
+        (e (make-wire))
+    )
+        (and-gate a b c)
+        (or-gate a b d)
+        (inverter c e)
+        (and-gate d e s)
+        'ok
+    )
+)
+
+(define (full-adder a b cin sum cout)
+    (let (
+        (c1 (make-wire))
+        (c2 (make-wire))
+        (s1 (make-wire))
+    )
+        (half-adder b cin s1 c1)
+        (half-adder a s1 sum c2)
+        (or-gate c1 c2 cout)
+        'ok
+    )
+)
+
+(define (ripple-carry-adder al bl sl c)
+    (define (ripple-carry-adder-iter current-cout rem-al rem-bl rem-sl)
+        (if (not (null? rem-al))
+            (let ((current-cin (make-wire)))
+                (full-adder (car rem-al) (car rem-bl) current-cin (car rem-sl) current-cout)
+                (ripple-carry-adder-iter current-cin (cdr rem-al) (cdr rem-bl) (cdr rem-sl))
+            )
+        )
+    )
+    (ripple-carry-adder-iter c al bl sl)
+)
+
+
+(let (
+    (al (list (make-wire) (make-wire) (make-wire)))
+    (bl (list (make-wire) (make-wire) (make-wire)))
+    (sl (list (make-wire) (make-wire) (make-wire)))
+    (c (make-wire))
+)
+    (ripple-carry-adder al bl sl c)
+    (add-action! (car sl) (lambda () (display "Output1 ") (display (get-signal (car sl))) (newline)))
+    (add-action! (cadr sl) (lambda () (display "Output2 ") (display (get-signal (cadr sl))) (newline)))
+    (add-action! (caddr sl) (lambda () (display "Output3 ") (display (get-signal (caddr sl))) (newline)))
+    (add-action! c (lambda () (display "Output-c ") (display (get-signal c)) (newline)))
+    (set-signal! (caddr al) 1)
+    (set-signal! (car al) 1)
+    (set-signal! (car bl) 1)
+)
