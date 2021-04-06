@@ -1,0 +1,32 @@
+(define (install-if) 
+    (define tag 'if)
+    (define (if? exp) (tagged-list? exp tag))
+    (define (if-predicate exp) (cadr exp))
+    (define (if-consequent exp) (caddr exp))
+    (define (if-alternative exp)
+        (if (not (null? (cdddr exp)))
+            (cadddr exp)
+            'false))
+            
+    (define (make-if predicate consequent alternative)
+        (list 'if predicate consequent alternative))
+
+    (define (analyze-if exp)
+        (let ((pproc (analyze (if-predicate exp)))
+                (cproc (analyze (if-consequent exp)))
+                (aproc (analyze (if-alternative exp))))
+            (lambda (env)
+            (if (true? (pproc env))
+                (cproc env)
+                (aproc env)))))
+
+    (put-checker tag if?)
+    (put-analyzer tag analyze-if)
+    (put tag 'make-if make-if)
+)
+
+(install-if) 
+
+(define (make-if . args)
+    (apply (get 'if 'make-if) args)
+)

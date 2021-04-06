@@ -1,0 +1,37 @@
+(define (install-begin) 
+    (define tag 'begin)
+
+    (define (begin? exp) (tagged-list? exp tag))
+    (define (begin-actions exp) (cdr exp))
+    (define (last-exp? seq) (null? (cdr seq)))
+    (define (first-exp seq) (car seq))
+    (define (rest-exps seq) (cdr seq))
+    (define (make-begin seq) (cons tag seq))
+    (define (sequence->exp seq)
+        (cond ((null? seq) seq)
+                ((last-exp? seq) (first-exp seq))
+                (else (make-begin seq))))
+
+    (put-checker tag begin?)
+    (put-analyzer tag analyze-sequence)
+    (put tag 'make-begin make-begin)
+    (put tag 'sequence->exp sequence->exp)
+)
+
+(define (analyze-sequence exps)
+    (define (sequentially proc1 proc2)
+        (lambda (env) (proc1 env) (proc2 env)))
+    (define (loop first-proc rest-procs)
+        (if (null? rest-procs)
+            first-proc
+            (loop (sequentially first-proc (car rest-procs))
+                (cdr rest-procs))))
+    (let ((procs (map analyze exps)))
+        (if (null? procs)
+            (error "Empty sequence -- ANALYZE"))
+        (loop (car procs) (cdr procs))))
+
+(install-begin)
+
+(define (make-begin . args) (apply (get 'begin 'make-begin) args))
+(define (sequence->exp . args) (apply (get 'begin 'sequence->exp) args))

@@ -1,0 +1,22 @@
+(define (install-assignment) 
+    (define tag 'set!)
+    (define (assignment? exp)
+        (tagged-list? exp tag))
+    (define (assignment-variable exp) (cadr exp))
+    (define (assignment-value exp) (caddr exp))
+    (define (make-assignment var val) (list tag var val))
+
+    (define (analyze-assignment exp)
+        (let ((var (assignment-variable exp))
+                (vproc (analyze (assignment-value exp))))
+            (lambda (env)
+            (set-variable-value! var (vproc env) env)
+            'ok)))
+
+    (put-checker tag assignment?)
+    (put-analyzer tag analyze-assignment)
+    (put tag 'make-assignment make-assignment)
+)
+
+(install-assignment)
+(define (make-assignment . args) (apply (get 'set! 'make-assignment) args))
