@@ -24,6 +24,7 @@
         (make-binding '* (tag-primitive *))
         (make-binding '/ (tag-primitive /))
         (make-binding '- (tag-primitive -))
+        (make-binding '= (tag-primitive =))
         (make-binding 'list (tag-primitive list))
         (make-binding 'display (tag-primitive display))
         (make-binding 'newline (tag-primitive newline))

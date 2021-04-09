@@ -47,3 +47,11 @@
 (define (no-operands? ops) (null? ops))
 (define (first-operand ops) (car ops))
 (define (rest-operands ops) (cdr ops))
+
+(define (zip a b aggregator)
+    (cond 
+        ((and (null? a) (null? b)) '())
+        ((or (null? a) (null? b)) (error "Mismatch of number of arguments -- ZIP" a b))
+        (else (cons (aggregator (car a) (car b)) (zip (cdr a) (cdr b) aggregator)))
+    )
+)

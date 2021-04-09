@@ -1,0 +1,35 @@
+(define (time-check f)
+    (display "Got result: ")
+    (let ((c (runtime)))
+        (display (f))
+        (let ((n (runtime)))
+            (newline)
+            (display "Finished in ")
+            (display (/ (- n c) 1000.0))
+            (display " milliseconds.")
+            (newline)
+        )
+    )
+)
+
+(define (run-exp exp)
+    (evl exp the-global-environment)
+)
+
+(define (run-with-time-check exp)
+    (time-check
+        (lambda ()
+            (run-exp exp)
+        )
+    )
+)
+
+(run-exp '(define (fib x)
+    (cond ((= x 1) 1)
+            ((= x 2) 2)
+            (else (+ (fib (- x 1)) (fib (- x 2)))))
+))
+
+
+(run-with-time-check '(fib 20))
+;;; (run-exp '(let ((a 3)) (display (= a 3))))

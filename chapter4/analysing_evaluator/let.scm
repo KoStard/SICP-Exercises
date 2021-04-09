@@ -59,3 +59,4 @@
 (define let-body (get 'let 'let-body))
 (define let-binding-var (get 'let 'let-binding-var))
 (define let-binding-exp (get 'let 'let-binding-exp))
+(define (make-application proc args) (cons proc args))

@@ -12,6 +12,7 @@
 (load "./chapter4/analysing_evaluator/lambda.scm")
 (load "./chapter4/analysing_evaluator/quoted.scm")
 (load "./chapter4/analysing_evaluator/environment.scm")
+(load "./chapter4/analysing_evaluator/let.scm")
 
 (define (evl exp env)
   ((analyze exp) env))
@@ -46,8 +47,10 @@
          (apply-primitive-procedure proc args))
         ((compound-procedure? proc)
          ((procedure-body proc)
-          (extend-environment (procedure-parameters proc)
-                              args
+          (extend-environment (zip 
+                                    (procedure-parameters proc)
+                                    args
+                                    make-binding)
                               (procedure-environment proc))))
         (else
          (error
@@ -77,6 +80,7 @@
         (make-binding '* (tag-primitive *))
         (make-binding '/ (tag-primitive /))
         (make-binding '- (tag-primitive -))
+        (make-binding '= (tag-primitive =))
         (make-binding 'list (tag-primitive list))
         (make-binding 'display (tag-primitive display))
         (make-binding 'newline (tag-primitive newline))
@@ -87,4 +91,7 @@
    (primitive-implementation proc) args))
 
 (define the-global-environment (setup-environment))
-(display (evl '(cond (true 1)) the-global-environment)) (newline)
+
+;;; (#%require racket/trace)
+
+;;; (display (evl '(let ((a 'b)) (display a)) the-global-environment)) (newline)

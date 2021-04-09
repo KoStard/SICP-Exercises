@@ -28,7 +28,8 @@
                 (cdr rest-procs))))
     (let ((procs (map analyze exps)))
         (if (null? procs)
-            (error "Empty sequence -- ANALYZE"))
+            (error "Empty sequence -- ANALYZE")
+            )
         (loop (car procs) (cdr procs))))
 
 (install-begin)
