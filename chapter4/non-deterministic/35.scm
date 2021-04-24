@@ -1,0 +1,6 @@
+(define (an-integer-in-between i j)
+    (if (> i j)
+        (amb)
+        (amb i (an-integer-in-between (+ i 1) j))
+    )
+)
