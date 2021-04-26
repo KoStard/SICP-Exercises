@@ -1,0 +1,20 @@
+(load "./chapter4/non-deterministic/sentences-base.scm")
+
+(run-all '(
+  (define (parse-word word-list)
+    ;;; (require (not (null? *unparsed*)))
+    ;;; (require (memq (car *unparsed*) (cdr word-list)))
+    ;;; (let ((found-word (car *unparsed*)))
+    ;;;   (set! *unparsed* (cdr *unparsed*))
+    ;;;   (list (car word-list) found-word)))
+    (define (internal-loop type available-words)
+        (require (not (null? available-words)))
+        (amb (list type (car available-words))
+            (internal-loop type (cdr available-words))
+        )
+    )
+    (internal-loop (car word-list) (cdr word-list))
+  )
+  (parse-sentence)
+  try-again
+))
